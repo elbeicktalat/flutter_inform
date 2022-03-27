@@ -46,10 +46,25 @@ class _MyAppState extends State<MyApp> {
   }
 
   void getBannerIn() {
-    const banner = InformBanner(
-      content: Text('Inform Banner'),
-      backgroundColor: Colors.amber,
-      borderRadius: BorderRadius.vertical(bottom: Radius.circular(18)),
+    Gradient gradient = const LinearGradient(
+      colors: [
+        Color(0xffef1385),
+        Color(0xfff12280),
+        Color(0xfff63d76),
+        Color(0xfff84f70),
+      ],
+      stops: [
+        0.2,
+        0.4,
+        0.6,
+        0.8,
+      ],
+    );
+
+    final banner = InformBanner(
+      content: const Text('Inform Banner'),
+      gradient: gradient,
+      borderRadius: const BorderRadius.vertical(bottom: Radius.circular(18)),
     );
     showBanner(context, banner);
   }

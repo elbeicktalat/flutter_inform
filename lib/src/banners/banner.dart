@@ -32,6 +32,8 @@ class InformBanner extends StatefulWidget implements MaterialBanner {
     this.duration,
     this.border,
     this.margin,
+    this.gradient,
+    this.image,
   })  : _actions = actions,
         super(key: key);
 
@@ -81,6 +83,10 @@ class InformBanner extends StatefulWidget implements MaterialBanner {
   ///
   /// If `null`, [MaterialBannerThemeData.backgroundColor] is used. If that's
   /// also `null`, [ColorScheme.surface] of [ThemeData.colorScheme] is used.
+  ///
+  /// This is ignored if [gradient] is non-null.
+  ///
+  /// The [backgroundColor] is drawn under the [image].
   @override
   final Color? backgroundColor;
 
@@ -166,6 +172,18 @@ class InformBanner extends StatefulWidget implements MaterialBanner {
   /// `EdgeInsets.only(bottom: elevation > 0 ? 10.0 : 0.0)`.
   final EdgeInsets? margin;
 
+  /// Defines the gradient to use for this [InformBanner].
+  ///
+  /// If this is property is non-null, [backgroundColor] has no effect.
+  ///
+  /// The [gradient] is drawn under the [image].
+  final Gradient? gradient;
+
+  /// An image to paint above the [backgroundColor] or [gradient].
+  ///
+  /// If [borderRadius] is non-null then the image is clipped to the given radii.
+  final DecorationImage? image;
+
   /// Defines if the banner has an action. This is needed to define if the banner can be [autoDismissible].
   ///
   /// Actions are any kind of user interaction.
@@ -226,6 +244,8 @@ class InformBanner extends StatefulWidget implements MaterialBanner {
       duration: duration,
       border: border,
       margin: margin,
+      gradient: gradient,
+      image: image,
     );
   }
 
@@ -345,13 +365,16 @@ class _InformBannerState extends State<InformBanner> {
             bottom: elevation > 0 ? 10.0 : 0.0,
           ),
       decoration: BoxDecoration(
+        color: backgroundColor,
         border: widget.border,
+        gradient: widget.gradient,
+        borderRadius: widget.borderRadius,
+        image: widget.image,
       ),
       child: Material(
-        color: backgroundColor,
+        color: Colors.transparent,
         elevation: elevation,
         shadowColor: shadowColor,
-        borderRadius: widget.borderRadius,
         textStyle: widget.contentTextStyle,
         child: InkWell(
           onTap: widget.onTap,
